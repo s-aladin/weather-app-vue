@@ -4,7 +4,9 @@
     <p class="weather__text text">Введите название города, чтобы запросить информацию о погоде:</p>
     <my-input
         class="weather__input"
+        placeholder="Введите город"
         v-model="city"
+        @keyup.enter="fetchWeather"
     />
     <my-button
       class="weather__button"
@@ -12,15 +14,12 @@
     >
       Запрос погоды
     </my-button>
-    <h2 class="title">Погода в городе {{ city }}:</h2>
-    <div class="postItem" v-show="weather.temp !== null">
-      <img v-show="weather.temp !== null" :src=weather.statusIcon>
-      <ul class="list">
-        <li class="text">{{ weather.status }}</li>
-        <li class="text">температура воздуха: <span class="temperature">{{ weather.temp }}</span></li>
-        <li class="text">ощущается как: <span class="temperature">{{ weather.feelsLike }}</span></li>
-      </ul>
-    </div>
+    <weather-block
+        class="weather__data"
+        :is-loading="isLoading"
+        :is-error="isError"
+        :weather="weather"
+    ></weather-block>
   </div>
 </template>
 
@@ -28,14 +27,18 @@
 import axios from "axios";
 import MyInput from "@/Components/UI/my-input.vue";
 import MyButton from "@/Components/UI/my-button.vue";
+import weatherBlock from "@/Components/weatherBlock.vue";
 
 export default {
-  components: {MyButton, MyInput},
+  components: {weatherBlock, MyButton, MyInput},
   data() {
     return {
       apiKey: '85cc7fd172e4346ef38471324ffc447f',
       city: '',
+      isError: false,
+      isLoading: false,
       weather: {
+        cityName: null,
         temp: null,
         feelsLike: null,
         status: null,
@@ -45,21 +48,53 @@ export default {
   },
   methods: {
     fetchWeather() {
-        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=metric&lang=ru&appid=${this.apiKey}`)
+        if(!this.city.trim()) return;
+
+        this.resetWeather();
+
+        axios.get(`https://api.openweathermap.org/data/2.5/weather`, {
+          params: {
+            q: this.city,
+            units: 'metric',
+            lang: 'ru',
+            appid: this.apiKey
+          }
+        })
+
             .then(response => {
               console.log(response)
 
-              this.weather.temp = response.data.main.temp;
-              this.weather.feelsLike = response.data.main.feels_like;
-              this.weather.status = response.data.weather[0].description;
-              this.weather.statusIcon = `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`;
-            });
+              this.updateWeather(response.data);
+              this.city = '';
+            })
+            .catch(error => {
+              console.log(error);
+              this.isError = true;
+            })
+            .finally(() => {
+              this.isLoading = false
+            })
+    },
+    resetWeather() {
+      this.isError = false;
+      this.isLoading = true;
+
+      for(const prop in this.weather) {
+        this.weather[prop] = null;
+      }
+    },
+    updateWeather(data) {
+      this.weather.cityName = data.name;
+      this.weather.temp = data.main.temp;
+      this.weather.feelsLike = data.main.feels_like;
+      this.weather.status = data.weather[0].description;
+      this.weather.statusIcon = `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`;
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .title {
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
@@ -94,21 +129,13 @@ export default {
       margin-left: 20px;
     }
 
+    &__data {
+      margin-top: 30px;
+    }
+
   }
 
-  .postItem {
-    width: 600px;
-    height: 100px;
-    background-color: #E6F2FF;
-    border: 2px solid #3A7BD5;
-    border-radius: 20px;
-    position: center;
-    display: flex;
-    gap: 20px;
-  }
-
-  .temperature {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 600;
+  .error {
+    color: red;
   }
 </style>
