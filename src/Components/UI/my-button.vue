@@ -19,5 +19,6 @@ export default {
   font-size: 16px;
   font-weight: 600;
   padding: 5px;
+  cursor: pointer;
 }
 </style>

@@ -7,11 +7,19 @@
       <li class="text">температура воздуха: <span class="temperature">{{ temp }}°C</span></li>
       <li class="text">ощущается как: <span class="temperature">{{ feelsLike }}°C</span></li>
     </ul>
+    <my-button
+        @click="$router.push('/details')"
+    >
+      Подробнее
+    </my-button>
   </div>
 </template>
 
 <script>
+import MyButton from "@/Components/UI/my-button.vue";
+
 export default {
+  components: {MyButton},
   props: {
     cityName: {
       type: String,
@@ -47,6 +55,7 @@ export default {
   border-radius: 20px;
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   column-gap: 20px;
 
   &__title {
