@@ -1,7 +1,7 @@
-import weatherDetails from "@/Components/weatherDetails.vue";
 import {createRouter, createWebHistory} from "vue-router";
 import weatherForm from "@/Components/weatherForm.vue";
 import mainPage from "@/Components/mainPage.vue";
+import weatherDetails from "@/Components/weatherDetails.vue";
 
 const routes =[
     {
