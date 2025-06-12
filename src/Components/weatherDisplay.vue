@@ -63,9 +63,4 @@ export default {
     margin: 0;
   }
 }
-
-.temperature {
-  font-family: 'Quicksand', sans-serif;
-  font-weight: 600;
-}
 </style>

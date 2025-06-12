@@ -33,5 +33,11 @@
   border: 5px solid #3A7BD5;
   border-radius: 50px;
   padding: 50px;
+  overflow: hidden;
+}
+
+.temperature {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
 }
 </style>
