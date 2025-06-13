@@ -40,10 +40,11 @@ export default {
     ...mapGetters('weatherModule', ['currentWeather', 'isLoading', "isError"])
   },
   methods: {
-    ...mapActions('weatherModule', ['fetchWeatherData']),
+    ...mapActions('weatherModule', ['fetchWeatherData', 'fetchDailyWeatherData']),
 
     fetchWeather() {
-      this.fetchWeatherData(this.city)
+      this.fetchWeatherData(this.city);
+      this.fetchDailyWeatherData(this.city);
       this.city = '';
     }
   }
