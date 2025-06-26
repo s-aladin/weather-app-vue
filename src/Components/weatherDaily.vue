@@ -30,11 +30,11 @@ export default {
 <style lang="scss" scoped>
 .weather__daily {
   width: 280px;
-  height: 75px;
+  height: 73px;
   padding: 5px;
   background-color: #E6F2FF;
   border: 2px solid #3A7BD5;
-  border-radius: 5px;
+  border-radius: 10px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
