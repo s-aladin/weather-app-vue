@@ -29,8 +29,8 @@ export default {
 
 <style lang="scss" scoped>
 .weather__daily {
-  width: 280px;
-  height: 73px;
+  max-width: 280px;
+  width: 100%;
   padding: 5px;
   background-color: #E6F2FF;
   border: 2px solid #3A7BD5;
@@ -47,8 +47,8 @@ export default {
   }
 
   &__image {
-    width: 50px;
-    height: 50px;
+    max-width: 50px;
+    width: 100%;
   }
 
   &__list {

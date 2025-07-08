@@ -40,7 +40,8 @@ export default {
 
 <style lang="scss" scoped>
   .navbar {
-    width: 700px;
+    max-width: 700px;
+    width: 100%;
     display: flex;
     flex-wrap: nowrap;
     gap: 10px;

@@ -32,8 +32,8 @@
 }
 
 .container {
-  width: 700px;
-  height: 360px;
+  max-width: 700px;
+  width: 100%;
   margin: 0 auto;
   background-color: #FFF;
   border: 5px solid #3A7BD5;

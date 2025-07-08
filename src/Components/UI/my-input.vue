@@ -18,9 +18,9 @@ export default {
 
 <style lang="scss" scoped>
 .input {
-  width: 400px;
-  height: 30px;
-  font-size: 20px;
+  max-width: 400px;
+  width: 100%;
+  font-size: 22px;
   border: 1px solid #3A7BD5;
   outline: none;
   border-radius: 5px;

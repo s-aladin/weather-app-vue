@@ -84,11 +84,10 @@ export default {
 
   &__status-icon {
     position: absolute;
-    width: 130px;
-    height: 130px;
+    max-width: 130px;
+    width: 100%;
     z-index: 1;
     left: 40%;
-    top: 0%;
     opacity: 0.9;
   }
 

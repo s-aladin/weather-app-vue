@@ -41,8 +41,10 @@ export default {
     }
 
     &__button {
-      width: 250px;
-      height: 70px;
+      max-width: 250px;
+      width: 100%;
+      max-height: 70px;
+      padding: 15px;
       font-size: 20px;
       border-radius: 10px;
     }

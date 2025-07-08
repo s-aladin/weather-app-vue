@@ -1,6 +1,18 @@
 <template>
   <div class="weather__info">
     <h3 class="title weather__info__title">Погода в городе {{ cityName }}:</h3>
+    <button
+        class="weather__info__button"
+        title="Добавить город в избранное"
+    >
+      <svg class="weather__info__icon" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 15.39L8.24 17.66L9.23 13.38L5.91 10.5L10.29 10.13L12 6.09L13.71 10.13L18.09 10.5L14.77 13.38L15.76 17.66L12 15.39Z"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+      </svg>
+    </button>
     <img :src=statusIcon :alt=status>
     <ul class="list">
       <li class="text">{{ status }}</li>
@@ -47,8 +59,8 @@ export default {
 
 <style lang="scss" scoped>
 .weather__info {
-  width: 600px;
-  height: 130px;
+  max-width: 600px;
+  width: 100%;
   padding: 10px;
   background-color: #E6F2FF;
   border: 2px solid #3A7BD5;
@@ -59,8 +71,17 @@ export default {
   column-gap: 20px;
 
   &__title {
-    flex: 100%;
+    flex: 80%;
     margin: 0;
+  }
+
+  &__button {
+    padding: 0;
+    max-width: 35px;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
   }
 }
 </style>

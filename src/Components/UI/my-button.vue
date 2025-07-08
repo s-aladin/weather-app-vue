@@ -10,8 +10,8 @@ export default {
 
 <style lang="scss" scoped>
 .button {
-  width: 180px;
-  height: 34px;
+  max-width: 180px;
+  width: 100%;
   border: 1px solid #3A7BD5;
   border-radius: 5px;
   background-color: #E6F2FF;

@@ -1,5 +1,15 @@
 <template>
-  <div class="wrapper">
+  <div
+      class="no-weather"
+      v-if="this.currentWeather.cityName === null"
+  >
+    <h1 class="no-weather__title title">Чтобы получить данные о погоде, введите названия города в форму запроса погоды!
+      ❄️🌫️☕</h1>
+  </div>
+  <div
+      class="wrapper"
+      v-else
+  >
     <weather-details
         class="weather__details-block"
     />
@@ -12,9 +22,13 @@
 <script>
 import WeatherDaily from "@/Components/weatherDaily.vue";
 import WeatherDetails from "@/Components/weatherDetails.vue";
+import {mapGetters} from "vuex";
 
 export default {
   components: {WeatherDetails, WeatherDaily},
+  computed: {
+    ...mapGetters('weatherModule', ['currentWeather'])
+  }
 }
 </script>
 
@@ -38,5 +52,9 @@ export default {
   display: flex;
   flex-direction: column;
   row-gap: 4px;
+}
+
+.no-weather {
+  margin-top: 100px;
 }
 </style>
