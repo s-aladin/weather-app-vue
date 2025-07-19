@@ -5,7 +5,10 @@
         class="weather__info__button"
         title="Добавить город в избранное"
     >
-      <svg class="weather__info__icon" width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg class="weather__info__icon"
+           :class="{weather__info__icon_active: isActive}"
+           @click.prevent="toggleClass"
+           width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12 15.39L8.24 17.66L9.23 13.38L5.91 10.5L10.29 10.13L12 6.09L13.71 10.13L18.09 10.5L14.77 13.38L15.76 17.66L12 15.39Z"
               stroke="currentColor"
               stroke-width="1.5"
@@ -20,7 +23,7 @@
       <li class="text">ощущается как: <span class="temperature">{{ feelsLike }}°C</span></li>
     </ul>
     <my-button
-        @click="$router.push('/details')"
+        @click="goToDetails"
     >
       Подробнее
     </my-button>
@@ -33,6 +36,10 @@ import MyButton from "@/Components/UI/my-button.vue";
 export default {
   components: {MyButton},
   props: {
+    cityId: {
+      type: Number,
+      required: true
+    },
     cityName: {
       type: String,
       required: true
@@ -53,6 +60,40 @@ export default {
       type: Number,
       required: true
     }
+  },
+  data() {
+    return {
+      isActive: false
+    }
+  },
+  methods: {
+    toggleClass() {
+      this.changeFavorites(this.cityId);
+    },
+    changeFavorites(cityId) {
+      const isCityInFavorites = this.$store.getters['weatherModule/favorites'].some(
+          (city) => city.cityId === cityId
+      );
+
+      console.log('cityId:', cityId);
+
+      if (isCityInFavorites) {
+        this.$store.commit('weatherModule/removeFavorite', cityId);
+        this.isActive = false;
+      } else {
+        this.$store.commit('weatherModule/addFavorite', cityId);
+        this.isActive = true;
+      }
+    },
+    goToDetails() {
+      this.$store.commit('weatherModule/setWeatherDataFromFavorites', this.cityId)
+      this.$router.push('/details');
+    }
+  },
+  created() {
+    this.isActive = this.$store.getters['weatherModule/favorites'].some(
+        (city) => city.cityId === this.cityId
+    );
   }
 }
 </script>
@@ -82,6 +123,13 @@ export default {
     border: none;
     background-color: transparent;
     cursor: pointer;
+  }
+
+  &__icon {
+    &_active {
+      color: #3A7BD5;
+      fill: currentColor;
+    }
   }
 }
 </style>

@@ -4,18 +4,21 @@ const state = () => ({
         isError: false,
         isLoading: false,
         weather: {
+            cityId: null,
             cityName: null,
             temp: null,
             feelsLike: null,
             status: null,
             statusIcon: null,
-            fullData: null
+            fullData: null,
+            dailyWeather: []
         },
-        dailyWeather: []
+        favorites: []
     });
 const getters = {
+        favorites: state => state.favorites,
         currentWeather: state => state.weather,
-        currentDailyWeather: state => state.dailyWeather,
+        currentDailyWeather: state => state.weather.dailyWeather,
         isLoading: state => state.isLoading,
         isError: state => state.isError,
         formatWindDirection: () => (deg) => {
@@ -111,6 +114,7 @@ const mutations = {
     },
     resetWeather(state) {
         state.weather = {
+            cityId: null,
             cityName: null,
             temp: null,
             feelsLike: null,
@@ -120,7 +124,24 @@ const mutations = {
         }
     },
     setDailyWeather(state, dailyWeatherData) {
-        state.dailyWeather = dailyWeatherData;
+        state.weather.dailyWeather = dailyWeatherData;
+    },
+    addFavorite(state, cityId) {
+        const cityExist = state.favorites.some(city => city.cityId === cityId);
+        if (!cityExist) {
+            state.favorites.push({...state.weather});
+        }
+        console.log('add favorites:', state.favorites);
+    },
+    removeFavorite(state, cityId) {
+        state.favorites = state.favorites.filter(city => city.cityId !== cityId);
+        console.log('remove favorites:', state.favorites);
+    },
+    setWeatherDataFromFavorites(state, cityId) {
+        const elem = state.favorites.filter(city => city.cityId === cityId);
+        if (elem.length !== 0) {
+            state.weather = elem[0];
+        }
     }
 };
 const actions = {
@@ -141,7 +162,9 @@ const actions = {
                 }
             });
 
+            console.log('response:', response);
             const weatherData = {
+                cityId: response.data.id,
                 cityName: response.data.name,
                 temp: Math.round(response.data.main.temp),
                 feelsLike: Math.round(response.data.main.feels_like),
@@ -151,7 +174,7 @@ const actions = {
             };
 
             commit('setWeatherData', weatherData);
-            console.log(weatherData);
+            console.log('weatherData:', weatherData);
             return weatherData;
         } catch (error) {
             console.log('Ошибка при запросе погоды:', error);
@@ -196,7 +219,7 @@ const actions = {
 
             const fourDayForecast = dailyWeatherData.slice(0, 4);
             commit('setDailyWeather', fourDayForecast);
-            console.log(fourDayForecast);
+            console.log('dailyWeather:', fourDayForecast);
         } catch (error) {
             console.error("Ошибка при получении погоды:", error);
         }

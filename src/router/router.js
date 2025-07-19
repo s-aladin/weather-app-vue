@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from "vue-router";
 import weatherForm from "@/Components/weatherForm.vue";
 import mainPage from "@/Components/mainPage.vue";
 import WeatherDetailsAndDaily from "@/Components/weatherDetailsAndDaily.vue";
+import favorites from "@/Components/favorites.vue";
 
 const routes =[
     {
@@ -15,6 +16,10 @@ const routes =[
     {
         path: '/details',
         component: WeatherDetailsAndDaily
+    },
+    {
+        path: '/favorites',
+        component: favorites
     }
 ]
 

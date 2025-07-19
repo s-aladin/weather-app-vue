@@ -9,6 +9,7 @@
     </my-button>
     <my-button
         class="navbar__button button"
+        @click="$router.push('/favorites')"
         :class="{ navbar__button_active: $route.path === '/favorites'}"
     >
       Избранное
@@ -56,6 +57,20 @@ export default {
         border: #3A7BD5 5px solid;
         border-bottom: none;
         box-shadow: 0 10px 0 -5px #FFFFFF;
+      }
+    }
+  }
+
+  @media(max-width: 830px) {
+    .navbar {
+      gap: 5px;
+
+      &__button {
+        font-size: 12px;
+
+        &__active {
+
+        }
       }
     }
   }

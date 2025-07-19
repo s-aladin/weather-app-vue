@@ -34,6 +34,7 @@
 .container {
   max-width: 700px;
   width: 100%;
+  height: 370px;
   margin: 0 auto;
   background-color: #FFF;
   border: 5px solid #3A7BD5;
@@ -50,5 +51,11 @@
 .navbar__block {
   margin: 0 auto;
   margin-top: 150px;
+}
+
+@media(max-width: 830px) {
+  .navbar__block {
+    margin-left: 50px;
+  }
 }
 </style>

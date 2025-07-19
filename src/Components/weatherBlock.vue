@@ -5,6 +5,7 @@
     <h2 class="title" v-else-if="!weather || weather.temp === null">Здесь отобразятся данные о погоде...</h2>
     <weather-display
         v-else
+        :city-id="weather.cityId"
         :city-name="weather.cityName"
         :temp="weather.temp"
         :feels-like="weather.feelsLike"

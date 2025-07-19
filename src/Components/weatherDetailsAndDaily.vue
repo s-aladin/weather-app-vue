@@ -36,6 +36,7 @@ export default {
 .wrapper {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   height: 100%;
 }
 
